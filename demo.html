@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tubes Œil Magique</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #ccc;
+            min-height: 100vh;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: #1a1a1a;
+            border-right: 1px solid #333;
+            padding: 20px;
+            overflow-y: auto;
+            flex-shrink: 0;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        h1 {
+            color: #00ff66;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        h2 {
+            color: #888;
+            font-size: 0.75em;
+            margin-bottom: 25px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #282828;
+        }
+
+        .control-group:last-child {
+            border-bottom: none;
+        }
+
+        .control-label {
+            display: block;
+            font-size: 0.75em;
+            color: #999;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        select, input[type="range"] {
+            width: 100%;
+            padding: 8px;
+            background: #222;
+            border: 1px solid #333;
+            color: #ccc;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        select:focus, input[type="range"]:focus {
+            outline: none;
+            border-color: #00ff66;
+        }
+
+        input[type="range"] {
+            padding: 0;
+            height: 6px;
+            appearance: none;
+            background: #333;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #00ff66;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: #00ff66;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+        }
+
+        .value-display {
+            display: inline-block;
+            float: right;
+            font-size: 0.85em;
+            color: #666;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider-switch {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #333;
+            transition: .3s;
+            border-radius: 26px;
+        }
+
+        .slider-switch:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: #666;
+            transition: .3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider-switch {
+            background-color: #00ff66;
+        }
+
+        input:checked + .slider-switch:before {
+            transform: translateX(24px);
+            background-color: #fff;
+        }
+
+        .tubes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+        }
+
+        .tube-card {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .tube-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .tube-label {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #00ff66;
+            font-weight: 600;
+        }
+
+        .code-snippet {
+            margin-top: 15px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 4px;
+            padding: 12px;
+            text-align: left;
+            font-family: 'Courier New', monospace;
+            font-size: 0.75em;
+            color: #aaa;
+            overflow-x: auto;
+            max-width: 100%;
+            position: relative;
+        }
+
+        .code-snippet pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #333;
+            border: 1px solid #444;
+            color: #00ff66;
+            padding: 4px 8px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: background 0.2s;
+        }
+
+        .copy-button:hover {
+            background: #444;
+        }
+
+        .copy-button:active {
+            background: #00ff66;
+            color: #000;
+        }
+
+        .info-bar {
+            background: #1a1a1a;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            border-left: 3px solid #00ff66;
+            font-size: 0.85em;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #333;
+            }
+
+            .tubes-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h1>L'Œil Magique en JS</h1>
+        <h2></h2>
+
+        <div class="control-group">
+            <label class="control-label">
+                Alimentation
+                <label class="switch" style="float: right;">
+                    <input type="checkbox" id="powerSwitch">
+                    <span class="slider-switch"></span>
+                </label>
+            </label>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">
+                Signal
+                <span class="value-display" id="signalValue">30%</span>
+            </label>
+            <input type="range" id="signalSlider" min="0" max="100" value="30">
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">
+                Inertie
+                <span class="value-display" id="inertiaValue">15</span>
+            </label>
+            <input type="range" id="inertiaSlider" min="1" max="50" value="15">
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">
+                Rotation
+                <span class="value-display" id="rotationValue">0°</span>
+            </label>
+            <input type="range" id="rotationSlider" min="0" max="360" step="15" value="0">
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">
+                Limite Min
+                <span class="value-display" id="minValue">0%</span>
+            </label>
+            <input type="range" id="minSlider" min="0" max="100" value="0">
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">
+                Limite Max
+                <span class="value-display" id="maxValue">100%</span>
+            </label>
+            <input type="range" id="maxSlider" min="0" max="100" value="100">
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">
+                Verre
+                <label class="switch" style="float: right;">
+                    <input type="checkbox" id="glassSwitch">
+                    <span class="slider-switch"></span>
+                </label>
+            </label>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="info-bar">
+            Tous les contrôles s'appliquent simultanément à tous les tubes pour une comparaison facile des différents modèles.
+        </div>
+
+        <div class="tubes-grid">
+
+            <div class="tube-card">
+                <div class="tube-container" id="tube-6e5"></div>
+                <div class="tube-label">6E5</div>
+                <div class="code-snippet">
+                    <button class="copy-button" onclick="copySnippet('6e5')">Copier</button>
+                    <pre id="snippet-6e5">&lt;div id="tube-6e5"&gt;&lt;/div&gt;
+&lt;script src="magicEye.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  new MagicEye({
+    container: '#tube-6e5',
+    model: '6E5',
+    size: 200
+  });
+&lt;/script&gt;</pre>
+                </div>
+            </div>
+				
+            <div class="tube-card">
+                <div class="tube-container" id="tube-em34"></div>
+                <div class="tube-label">EM34</div>
+                <div class="code-snippet">
+                    <button class="copy-button" onclick="copySnippet('em34')">Copier</button>
+                    <pre id="snippet-em34">&lt;div id="tube-em34"&gt;&lt;/div&gt;
+&lt;script src="magicEye.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  new MagicEye({
+    container: '#tube-em34',
+    model: 'EM34',
+    size: 200
+  });
+&lt;/script&gt;</pre>
+                </div>
+            </div>
+				
+            <div class="tube-card">
+                <div class="tube-container" id="tube-em31"></div>
+                <div class="tube-label">EM31</div>
+                <div class="code-snippet">
+                    <button class="copy-button" onclick="copySnippet('em31')">Copier</button>
+                    <pre id="snippet-em31">&lt;div id="tube-em31"&gt;&lt;/div&gt;
+&lt;script src="magicEye.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  new MagicEye({
+    container: '#tube-em31',
+    model: 'EM31',
+    size: 200
+  });
+&lt;/script&gt;</pre>
+                </div>
+            </div>
+				
+        </div>
+    </div>
+
+<script src="magicEye.min.js"></script>
+<script>
+    // Créer toutes les instances de tubes avec les paramètres initiaux
+    const tubes = {
+        '6E5': new MagicEye({
+            container: '#tube-6e5',
+            model: '6E5',
+            size: 200,
+            signal: 0.3,
+            remanence: 15
+        }),
+        'EM34': new MagicEye({
+            container: '#tube-em34',
+            model: 'EM34',
+            size: 200,
+            signal: 0.3,
+            remanence: 15
+        }),
+        'EM31': new MagicEye({
+            container: '#tube-em31',
+            model: 'EM31',
+            size: 200,
+            signal: 0.3,
+            remanence: 15
+        })
+    };
+
+    // Récupérer les éléments DOM
+    const powerSwitch = document.getElementById('powerSwitch');
+    const signalSlider = document.getElementById('signalSlider');
+    const inertiaSlider = document.getElementById('inertiaSlider');
+    const rotationSlider = document.getElementById('rotationSlider');
+    const minSlider = document.getElementById('minSlider');
+    const maxSlider = document.getElementById('maxSlider');
+    const glassSwitch = document.getElementById('glassSwitch');
+
+    const signalValue = document.getElementById('signalValue');
+    const inertiaValue = document.getElementById('inertiaValue');
+    const rotationValue = document.getElementById('rotationValue');
+    const minValueDisplay = document.getElementById('minValue');
+    const maxValueDisplay = document.getElementById('maxValue');
+
+    // Fonction auxiliaire pour appliquer un réglage à tous les tubes
+    function applyToAllTubes(callback) {
+        Object.values(tubes).forEach(callback);
+    }
+
+    // Initialiser tous les tubes avec les valeurs actuelles de l'interface
+    function initializeTubes() {
+        const isPowered = powerSwitch.checked;
+        const signal = signalSlider.value / 100;
+        const inertia = parseInt(inertiaSlider.value);
+        const rotation = parseInt(rotationSlider.value);
+        const minValue = minSlider.value / 100;
+        const maxValue = maxSlider.value / 100;
+
+        applyToAllTubes(tube => {
+            tube.setRemanence(inertia);
+            tube.setRotation(rotation);
+            tube.setMinValue(minValue);
+            tube.setMaxValue(maxValue);
+            tube.setSignal(signal);
+            tube.setPower(isPowered);
+        });
+    }
+
+    // Ajuster le signal s'il est en dehors des nouvelles limites
+    function adjustSignalToLimits() {
+        const currentSignal = signalSlider.value / 100;
+        const minValue = minSlider.value / 100;
+        const maxValue = maxSlider.value / 100;
+        
+        let newSignal = currentSignal;
+        
+        if (currentSignal < minValue) {
+            newSignal = minValue;
+            signalSlider.value = Math.round(minValue * 100);
+            signalValue.textContent = signalSlider.value + '%';
+        } else if (currentSignal > maxValue) {
+            newSignal = maxValue;
+            signalSlider.value = Math.round(maxValue * 100);
+            signalValue.textContent = signalSlider.value + '%';
+        }
+        
+        if (newSignal !== currentSignal) {
+            applyToAllTubes(tube => tube.setSignal(newSignal));
+        }
+    }
+
+    // Bouton d'alimentation - contrôle tous les tubes
+    powerSwitch.addEventListener('change', (e) => {
+        const isOn = e.target.checked;
+        const signal = signalSlider.value / 100;
+        
+        applyToAllTubes(tube => {
+            tube.setPower(isOn);
+            if (isOn) {
+                // Réappliquer le signal après l'allumage
+                tube.setSignal(signal);
+            }
+        });
+    });
+
+    // Contrôle du signal - s'applique à tous les tubes
+    signalSlider.addEventListener('input', (e) => {
+        const value = e.target.value / 100;
+        signalValue.textContent = e.target.value + '%';
+        applyToAllTubes(tube => tube.setSignal(value));
+    });
+
+    // Contrôle de l'inertie - s'applique à tous les tubes
+    inertiaSlider.addEventListener('input', (e) => {
+        const value = parseInt(e.target.value);
+        inertiaValue.textContent = value;
+        applyToAllTubes(tube => tube.setRemanence(value));
+    });
+
+    // Contrôle de la rotation - s'applique à tous les tubes
+    rotationSlider.addEventListener('input', (e) => {
+        const value = parseInt(e.target.value);
+        rotationValue.textContent = value + '°';
+        applyToAllTubes(tube => tube.setRotation(value));
+    });
+
+    // Contrôle de la limite min - s'applique à tous les tubes
+    minSlider.addEventListener('input', (e) => {
+        const minVal = parseInt(e.target.value);
+        const maxVal = parseInt(maxSlider.value);
+        
+        // Bloquer le slider min s'il atteint la valeur max
+        if (minVal >= maxVal) {
+            minSlider.value = maxVal - 1;
+            minValueDisplay.textContent = minSlider.value + '%';
+            return;
+        }
+        
+        const value = minVal / 100;
+        minValueDisplay.textContent = minVal + '%';
+        applyToAllTubes(tube => tube.setMinValue(value));
+        
+        // Ajuster le signal si nécessaire
+        adjustSignalToLimits();
+    });
+
+    // Contrôle de la limite max - s'applique à tous les tubes
+    maxSlider.addEventListener('input', (e) => {
+        const maxVal = parseInt(e.target.value);
+        const minVal = parseInt(minSlider.value);
+
+        // Bloquer le slider max s'il atteint la valeur min
+        if (maxVal <= minVal) {
+            maxSlider.value = minVal + 1;
+            maxValueDisplay.textContent = maxSlider.value + '%';
+            return;
+        }
+
+        const value = maxVal / 100;
+        maxValueDisplay.textContent = maxVal + '%';
+        applyToAllTubes(tube => tube.setMaxValue(value));
+
+        // Ajuster le signal si nécessaire
+        adjustSignalToLimits();
+    });
+
+    // Contrôle de l'overlay de verre - s'applique à tous les tubes
+    glassSwitch.addEventListener('change', (e) => {
+        const glassPath = e.target.checked ? 'verre.svg' : null;
+        applyToAllTubes(tube => tube.setGlassOverlay(glassPath));
+    });
+
+    // Initialiser les tubes au chargement de la page
+    initializeTubes();
+
+    // Fonction pour copier le snippet dans le presse-papier
+    function copySnippet(tubeId) {
+        const snippetElement = document.getElementById('snippet-' + tubeId);
+        const text = snippetElement.textContent;
+        
+        navigator.clipboard.writeText(text).then(() => {
+            // Feedback visuel temporaire
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = 'Copié !';
+            button.style.background = '#00ff66';
+            button.style.color = '#000';
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.background = '#333';
+                button.style.color = '#00ff66';
+            }, 1500);
+        }).catch(err => {
+            console.error('Erreur lors de la copie:', err);
+        });
+    }
+</script>
+
+</body>
+</html>

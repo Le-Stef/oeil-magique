@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<title>L'œil magique</title>
+		<style>
+		* { margin: 0; padding: 0; box-sizing: border-box; }
+
+		body {
+			background: #0a0a0a;
+			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			gap: 20px;
+		}
+
+		input[type="range"] {
+			width: 200px;
+		}
+
+		</style>
+	</head>
+	
+	<body>
+
+		<div class="tube-container" id="tube-6e5"></div>
+		<input type="range" id="eyeValue" min="0" max="100" value="30"/>
+
+		<script src="magicEye.min.js"></script>
+		<script>
+			const eye = new MagicEye({
+				container: '#tube-6e5',
+				model: '6E5',
+				size: 200,
+				powered: true,
+				signal: 0.3
+			});
+
+			const slider = document.getElementById("eyeValue");
+			slider.addEventListener('input', function (evt) {
+				const value = this.value / 100;
+				console.log('Paramétrage du signal :', value);
+				eye.setSignal(value);
+			});
+		</script>
+
+	</body>
+</html>
