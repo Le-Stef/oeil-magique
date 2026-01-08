@@ -5,7 +5,7 @@ Une bibliothèque de composants JavaScript permettant de simuler les tubes catho
 ## Caractéristiques
 
 - Implémentation JavaScript pure sans dépendances
-- Plusieurs modèles de tubes son pris en charge : 6E5, EM34 et EM31
+- Plusieurs modèles de tubes sont pris en charge : 6E5, EM34 et EM31
 - Animations phosphorescentes avec inertie
 - Limites de plage de signal configurables
 - Apparence et rotation personnalisables
