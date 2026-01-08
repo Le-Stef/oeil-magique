@@ -23,7 +23,7 @@ Incluez la bibliothèque `magicEye.min.js` dans votre code HTML :
 
 ### Utilisation de base
 
-Vous pouvez vous inspirer du fichier [simple.html](https://le-stef.github.io/oeil-magique/simple.htl) qui montre le minimum requis.
+Vous pouvez vous inspirer du fichier [simple.html](https://le-stef.github.io/oeil-magique/simple.html) qui montre le minimum requis.
 
 Voici le cœur :
 ```html
