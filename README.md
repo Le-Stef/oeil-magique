@@ -1,6 +1,6 @@
 # Tubes "Œil Magique" en Javascript
 
-Une bibliothèque de composants JavaScript permettant de simuler les tubes cathodiques de type "Œil Magique", des indicateurs visuels d'accord de fréquence et de qualité de réception largement utilisés dans les radios et téléviseurs jusque dans les années 1950.
+Bibliothèque JavaScript permettant de simuler les tubes cathodiques de type "Œil Magique", ces indicateurs visuels d'accord de fréquence et de qualité de réception largement utilisés dans les radios et téléviseurs jusque dans les années 1950.
 
 ## Caractéristiques
 
@@ -40,7 +40,7 @@ const tube = new MagicEye({
 
 ## Modèles disponibles
 
-Voir la page de démonstration : `demo.html`.
+Voir la page de démonstration : `index.html`.
 
 ## Options de configuration
 
@@ -148,7 +148,7 @@ Fonctionne avec tous les navigateurs modernes prenant en charge :
 
 ## Exemples
 
-Consultez le fichier `demo.html` pour voir une démonstration complète des les modèles ainsi que les fonctionnalités des tubes.
+Consultez le fichier `index.html` pour voir une démonstration complète des les modèles ainsi que les fonctionnalités des tubes.
 
 ## Licence
 
