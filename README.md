@@ -23,7 +23,7 @@ Incluez la bibliothèque `magicEye.min.js` dans votre code HTML :
 
 ### Utilisation de base
 
-Vous pouvez vous inspirer du fichier `simple.html` qui montre le minimum requis.
+Vous pouvez vous inspirer du fichier [simple.html](https://le-stef.github.io/oeil-magique/simple.htl) qui montre le minimum requis.
 
 Voici le cœur :
 ```html
@@ -40,7 +40,7 @@ const tube = new MagicEye({
 
 ## Modèles disponibles
 
-Voir la page de démonstration : `index.html`.
+Voir la page de démonstration : [index.html](https://le-stef.github.io/oeil-magique/).
 
 ## Options de configuration
 
@@ -148,7 +148,7 @@ Fonctionne avec tous les navigateurs modernes prenant en charge :
 
 ## Exemples
 
-Consultez le fichier `index.html` pour voir une démonstration complète des les modèles ainsi que les fonctionnalités des tubes.
+Consultez le fichier [index.html](https://le-stef.github.io/oeil-magique/) pour voir une démonstration complète des les modèles ainsi que les fonctionnalités des tubes.
 
 ## Licence
 
@@ -161,4 +161,4 @@ Les contributions sont les bienvenues.
 ## Crédits
 
 Basé sur les conceptions historiques des tubes magiques des années 1930 à 1950, à l'époque de l'électronique à tubes à vide.
-Merci à Howard pour son précieux site Web "magiceyetubes.com" et notamment pour ses patterns des différents tubes : https://www.magiceyetubes.com/patterns.htm 
+Merci à Howard pour son précieux site Web "magiceyetubes.com" et notamment pour ses patterns des différents tubes : [Magic Eye Tubes patterns](https://www.magiceyetubes.com/patterns.htm).
