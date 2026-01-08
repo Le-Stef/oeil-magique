@@ -152,7 +152,7 @@ Consultez le fichier [index.html](https://le-stef.github.io/oeil-magique/) pour 
 
 ## Licence
 
-Licence APACHE 2.0 - Voir le fichier LICENSE pour plus de détails.
+Licence APACHE 2.0 - Voir le fichier [LICENSE](LICENSE) pour plus de détails.
 
 ## Contribution
 
