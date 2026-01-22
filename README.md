@@ -23,6 +23,8 @@ Incluez la bibliothèque `magicEye.min.js` dans votre code HTML :
 
 ### Utilisation de base
 
+![](oeil-magique.webp "Exemples d'affichages de l'oeil magique version Javascript")
+
 Vous pouvez vous inspirer du fichier [simple.html](https://le-stef.github.io/oeil-magique/simple.html) qui montre le minimum requis.
 
 Voici le cœur :
@@ -160,5 +162,5 @@ Les contributions sont les bienvenues.
 
 ## Crédits
 
-Basé sur les conceptions historiques des tubes magiques des années 1930 à 1950, à l'époque de l'électronique à tubes à vide.
+Basé sur les conceptions historiques des tubes cathodiques "Œil magique" des années 1930 à 1950, à l'époque de l'électronique à tubes à vide.
 Merci à Howard pour son précieux site Web "magiceyetubes.com" et notamment pour ses patterns des différents tubes : [Magic Eye Tubes patterns](https://www.magiceyetubes.com/patterns.htm).
