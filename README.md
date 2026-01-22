@@ -23,9 +23,8 @@ Incluez la bibliothèque `magicEye.min.js` dans votre code HTML :
 
 ### Utilisation de base
 
-![](oeil_magique.webp "Exemples d'affichages de l'oeil magique version Javascript")
-
 Vous pouvez vous inspirer du fichier [simple.html](https://le-stef.github.io/oeil-magique/simple.html) qui montre le minimum requis.
+![](oeil_simple.webp "Exemple d'affichage simple de l'oeil magique version Javascript")
 
 Voici le cœur :
 ```html
@@ -43,6 +42,7 @@ const tube = new MagicEye({
 ## Modèles disponibles
 
 Voir la page de démonstration : [index.html](https://le-stef.github.io/oeil-magique/).
+![](oeil_magique.webp "Exemples d'affichages de l'oeil magique version Javascript")
 
 ## Options de configuration
 
